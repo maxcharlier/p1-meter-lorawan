@@ -402,11 +402,11 @@ const bool elec_field_has_stat(int ix) {
 
 const uint32_t elec_field_int_value(int ix) {
   const char *value = elec_field_value(ix);
-  char cleaned[TELE_VALUE_SIZE];
+  char cleaned[OBIS_VALUE_SIZE];
   int j = 0;
 
   // Copy everything except '.'
-  for (int i = 0; i < TELE_VALUE_SIZE && value[i] != '\0'; ++i) {
+  for (int i = 0; i < OBIS_VALUE_SIZE && value[i] != '\0'; ++i) {
     if (value[i] != '.') cleaned[j++] = value[i];
   }
   cleaned[j] = '\0';
