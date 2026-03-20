@@ -1,0 +1,19 @@
+# LoRaWAN credentials — never commit real keys
+# Copy credentials.h.example → credentials.h and fill in your keys
+credentials.h
+
+# Arduino build artifacts
+*.elf
+*.bin
+*.hex
+*.map
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code
+.claude/

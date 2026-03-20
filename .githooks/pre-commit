@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Pre-commit hook: block credentials.h files with non-zero LoRaWAN keys
+
+set -e
+
+FOUND=0
+
+# Check any staged credentials.h file
+while IFS= read -r file; do
+    # Look for non-zero hex bytes (e.g. 0xAB, 0x12, etc. — anything not 0x00)
+    if git show ":$file" 2>/dev/null | grep -qE '0x[0-9A-Fa-f]*[1-9A-Fa-f][0-9A-Fa-f]*'; then
+        echo "ERROR: Potential real LoRaWAN credentials detected in: $file"
+        echo "       Remove it from staging or ensure it only contains 0x00 placeholder values."
+        FOUND=1
+    fi
+done < <(git diff --cached --name-only | grep 'credentials\.h$')
+
+if [ "$FOUND" -ne 0 ]; then
+    echo ""
+    echo "Commit blocked to protect your LoRaWAN keys."
+    echo "If this is intentional, use: git commit --no-verify"
+    exit 1
+fi
+
+exit 0
