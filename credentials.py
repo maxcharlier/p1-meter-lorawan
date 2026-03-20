@@ -91,19 +91,19 @@ CREDENTIALS_H_TEMPLATE = """\
 /* OTAA parameters */
 // Get these from your LoRaWAN network server (TTN, Chirpstack, etc.)
 // DevEUI: {dev_eui_hex}
-static uint8_t devEui[] = {{ {dev_eui_array} }};
+uint8_t devEui[] = {{ {dev_eui_array} }};
 // AppEUI: {app_eui_hex}
-static uint8_t appEui[] = {{ {app_eui_array} }};
+uint8_t appEui[] = {{ {app_eui_array} }};
 // AppKey: {app_key_hex}
-static uint8_t appKey[] = {{ {app_key_array} }};
+uint8_t appKey[] = {{ {app_key_array} }};
 
 
 /* ABP parameters (if using ABP instead of OTAA) */
-static uint8_t nwkSKey[] = {{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+uint8_t nwkSKey[] = {{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
-static uint8_t appSKey[] = {{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+uint8_t appSKey[] = {{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
-static uint32_t devAddr = (uint32_t)0x00000000;
+uint32_t devAddr = (uint32_t)0x00000000;
 
 #endif
 """
