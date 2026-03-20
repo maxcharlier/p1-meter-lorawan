@@ -102,7 +102,7 @@ bool readOneMeterMessage() {
     while(!message_ended){
 
       memset(serialBuffer, 0, sizeof(serialBuffer));
-      len = readSerial1Until('\n', &serialBuffer, SERIAL_BUFFER_SIZE);
+      len = readSerial1Until('\n', (char*)serialBuffer, SERIAL_BUFFER_SIZE);
       if (len < SERIAL_BUFFER_SIZE){
         serialBuffer[len] = '\n';
         serialBuffer[len + 1] = 0;
