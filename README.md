@@ -18,7 +18,10 @@ python3 credentials.py --deveui AA:BB:CC:DD:EE:FF:00:11 \\
                         --appkey AA:BB:CC:DD:EE:FF:00:11:22:33:44:55:66:77:88:99 \\
                         --write-h mono-phase-lorawan/credentials.h
 
-# 4. Open the sketch in Arduino IDE, build and flash
+# 4. Install required Arduino libraries (Tools → Manage Libraries):
+#    - "DHT sensor library" by Adafruit  (also install its dependency: Adafruit Unified Sensor)
+
+# 5. Open the sketch in Arduino IDE, build and flash
 ```
 
 > **Credentials:** `credentials.h` is git-ignored. A zeroed template is provided as
