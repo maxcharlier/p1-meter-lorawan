@@ -63,58 +63,73 @@ Board documentation and pinout are available in [`sources/`](sources/).
 | Component | Reference | Notes |
 |-----------|-----------|-------|
 | Arduino board | Heltec CubeCell HTCC-AB02A | Two hardware UARTs + integrated LoRa 868 MHz |
-| Signal inverter / level shifter | BS170 N-channel MOSFET | Inverts 5 V → 3.3 V |
-| Meter connector | RJ11 6P2C | P1 port on Belgian smart meters |
+| Signal inverter / level shifter | BS170 N-channel MOSFET | Inverts 5 V → 3.3 V (common-drain) |
+| Meter connector | RJ11 6P6C | P1 port on Belgian smart meters (pins 1, 2, 3, 5, 6 used) |
 | Environmental sensor | DHT22 | Temperature + humidity (all sketches except serial-config-checker) |
+| Pull-up resistors | 2 × 10 kΩ (R1, R2) | BS170 inverter biasing (R1 on source/RX2, R2 on gate/Data) |
+| DHT pull-up resistor | 1 × 10 kΩ (RPullUpDHT) | DHT22 data line pull-up to VEXT |
+| LED current limiter | 1 × 220 Ω (R3) | TX indicator LED |
+| TX indicator LED | 5 mm red LED | Driven by GPIO1 via R3 |
+| Power jumper | 2-pin header (5V_JP) | Connects P1 +5 V to VIN — **remove when using USB** |
 
 ### Wiring — P1 port to CubeCell
 
 > **WARNING — do not connect both power sources at the same time.**
 > The CubeCell is powered from the meter's 5 V line (VIN pin).
 > If you also plug in a USB cable while the meter is connected, you will feed two power sources into the board simultaneously, which can damage the board or the meter.
-> Disconnect the P1 RJ11 cable before connecting USB (for programming or debug), and reconnect it afterwards.
+> Remove the 5V_JP jumper before connecting USB (for programming or debug).
 
 The P1 port outputs **inverted** 5 V TTL serial (5 V = logic 0, 0 V = logic 1).
-The BS170 MOSFET inverts the signal and shifts it to 3.3 V in a single stage.
+The BS170 MOSFET inverts the signal and shifts it to 3.3 V in a single stage using a common-drain configuration:
+- **Gate** receives the P1 data signal (with R2 10 kΩ pull-up to GPIO7).
+- **Source** outputs the inverted 3.3 V signal to UART_RX2 (with R1 10 kΩ pull-up to GPIO7).
+- **Drain** is tied to GND.
+
+GPIO7 is set HIGH to provide 3.3 V through R1 and R2, biasing the inverter. Setting GPIO7 LOW disables reception.
 
 ```
-Belgian Meter P1 (RJ11)           CubeCell HTCC-AB02A
+Belgian Meter P1 (RJ11 6P6C)     CubeCell HTCC-AB02A
 ─────────────────────────────────────────────────────
-Pin 1  5V  ──────────────────────→  VIN  (powers the board)
-Pin 2  GND ──────────────────────→  GND
-Pin 6  Data ────[BS170]───────────→  UART_RX2  (Serial1)
-             BS170 gate → GPIO10 (inverter power, set HIGH)
-             BS170 drain → UART_RX2
-             BS170 source → GND
+Pin 1  +5V  ─────[5V_JP]────────→  VIN  (powers the board)
+Pin 2  RTS  ─────────────────────→  +5V  (Data Request, active HIGH — hardwired to 5 V)
+Pin 3  GND  ─────────────────────→  GND
+Pin 4  NC
+Pin 5  Data ─────────────────────→  BS170 gate (via R2 10 kΩ pull-up to GPIO7)
+Pin 6  GND  ─────────────────────→  GND
 
-Data-request line:
-       GPIO7 (OD_HI) ──────────→  P1 pin 4  (Data Request, active HIGH)
+BS170 inverter (common-drain configuration):
+       BS170 gate   ← P1 Data + R2 (10 kΩ pull-up to GPIO7)
+       BS170 source → UART_RX2 (Serial1) + R1 (10 kΩ pull-up to GPIO7)
+       BS170 drain  → GND
+
+GPIO7 (OUTPUT, set HIGH) provides 3.3 V pull-up bias through R1 and R2,
+effectively enabling/disabling the inverter.
 ```
 
-> **Data Request line**: P1 spec requires open-drain drive (never GND, float or HIGH only).
-> The CubeCell `OD_HI` pin mode provides this behaviour.
+> **Data Request line**: The P1 spec requires the Data Request line (RJ11 pin 2) to be
+> pulled HIGH to enable telegram output. On this PCB, it is hardwired to the +5 V rail,
+> so the meter streams continuously whenever power is present.
 
 ### DHT22 (mono-phase-lorawan, three-phase-lorawan, mono-phase-overvoltage)
 
 ```
 DHT22               CubeCell
 ─────────────────────────────
-VCC  ─────────────→  3.3V
+VCC  ─────────────→  VEXT (switchable 3.3 V)
 GND  ─────────────→  GND
-DATA ─[10 kΩ]─────→  GPIO4  (pull-up included)
+DATA ─[10 kΩ]─────→  GPIO9 / SDA1  (pull-up to VEXT)
 ```
 
 ### GPIO pin summary
 
 | GPIO | Direction | Function |
 |------|-----------|----------|
-| GPIO10 | OUTPUT | BS170 inverter VCC (set HIGH to power inverter) |
-| GPIO7  | OD_HI  | P1 Data Request line |
-| GPIO4  | INPUT  | DHT22 data |
+| GPIO7  | OUTPUT | BS170 inverter enable (set HIGH to provide 3.3 V pull-up bias via R1 + R2) |
+| GPIO9 / SDA1 | INPUT | DHT22 data (10 kΩ pull-up to VEXT) |
 | GPIO5  | INPUT  | Floating — used for `randomSeed()` |
-| GPIO1  | OUTPUT | LED indicator |
+| GPIO1  | OUTPUT | TX LED indicator (via R3 220 Ω) |
 | USER_KEY | INPUT_PULLDOWN | User button (manual LoRa send) |
-| UART_RX2 / UART_TX2 | — | Hardware Serial1, 115200 8N1 |
+| UART_RX2 / UART_TX2 | — | Hardware Serial1, 115200 8N1 (RX2 receives inverted P1 data via BS170) |
 
 ---
 
