@@ -1,0 +1,61 @@
+<svg width="330" height="300" viewBox="0 0 330 300" xmlns="http://www.w3.org/2000/svg">
+<!-- P1 port RJ11 male connector — front view, silkscreen -->
+
+<!-- "Male" label above connector -->
+<text x="165" y="18" text-anchor="middle" font-family="monospace" font-size="11" fill="#000" font-weight="500">Male</text>
+
+<!-- Upper cable housing (narrower) -->
+<rect x="75" y="28" width="180" height="50" rx="4" fill="none" stroke="#000" stroke-width="1.5"/>
+
+<!-- Lower plug body (wider) -->
+<rect x="35" y="78" width="260" height="90" rx="3" fill="none" stroke="#000" stroke-width="1.5"/>
+
+<!-- Latch tab -->
+<rect x="120" y="78" width="90" height="8" rx="2" fill="none" stroke="#000" stroke-width="1"/>
+
+<!-- Labels inside upper housing -->
+<text x="82" y="53" font-family="monospace" font-size="10" fill="#000" font-weight="500">Front</text>
+<text x="210" y="53" font-family="monospace" font-size="10" fill="#000" font-weight="500">RJ11</text>
+
+<!-- 6 wire circles -->
+<circle cx="72" cy="103" r="5" fill="none" stroke="#000" stroke-width="1"/>
+<circle cx="108" cy="103" r="5" fill="none" stroke="#000" stroke-width="1"/>
+<circle cx="144" cy="103" r="5" fill="none" stroke="#000" stroke-width="1"/>
+<circle cx="180" cy="103" r="5" fill="none" stroke="#000" stroke-width="1"/>
+<circle cx="216" cy="103" r="5" fill="none" stroke="#000" stroke-width="1"/>
+<circle cx="252" cy="103" r="5" fill="none" stroke="#000" stroke-width="1"/>
+
+<!-- 6 contact pins below the circles -->
+<rect x="66" y="118" width="12" height="28" rx="1" fill="none" stroke="#000" stroke-width="1"/>
+<rect x="102" y="118" width="12" height="28" rx="1" fill="none" stroke="#000" stroke-width="1"/>
+<rect x="138" y="118" width="12" height="28" rx="1" fill="none" stroke="#000" stroke-width="1"/>
+<rect x="174" y="118" width="12" height="28" rx="1" fill="none" stroke="#000" stroke-width="1"/>
+<rect x="210" y="118" width="12" height="28" rx="1" fill="none" stroke="#000" stroke-width="1"/>
+<rect x="246" y="118" width="12" height="28" rx="1" fill="none" stroke="#000" stroke-width="1"/>
+
+<!-- Metal contact lines inside pins -->
+<line x1="72" y1="121" x2="72" y2="140" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+<line x1="108" y1="121" x2="108" y2="140" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+<line x1="144" y1="121" x2="144" y2="140" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+<line x1="180" y1="121" x2="180" y2="140" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+<line x1="216" y1="121" x2="216" y2="140" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+<line x1="252" y1="121" x2="252" y2="140" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+
+<!-- Pin numbers: 6 5 4 3 2 1 -->
+<text x="72" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#000">6</text>
+<text x="108" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#000">5</text>
+<text x="144" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#000">4</text>
+<text x="180" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#000">3</text>
+<text x="216" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#000">2</text>
+<text x="252" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#000">1</text>
+
+<!-- Signal names rotated 90° downward, visually centered under pin numbers -->
+<!-- Shift x left by 4px (half font height) to center the rotated glyph column -->
+<text font-family="monospace" font-size="10" fill="#000" text-anchor="start" transform="translate(68,212) rotate(90)">GND</text>
+<text font-family="monospace" font-size="10" fill="#000" text-anchor="start" transform="translate(104,212) rotate(90)">DATA</text>
+<text font-family="monospace" font-size="10" fill="#000" text-anchor="start" transform="translate(140,212) rotate(90)">NC</text>
+<text font-family="monospace" font-size="10" fill="#000" text-anchor="start" transform="translate(176,212) rotate(90)">GND</text>
+<text font-family="monospace" font-size="10" fill="#000" text-anchor="start" transform="translate(212,212) rotate(90)">RTS</text>
+<text font-family="monospace" font-size="10" fill="#000" text-anchor="start" transform="translate(248,212) rotate(90)">+5V</text>
+
+</svg>

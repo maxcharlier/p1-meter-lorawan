@@ -1,0 +1,18 @@
+<svg width="330" height="200" viewBox="0 0 330 200" xmlns="http://www.w3.org/2000/svg">
+<!-- PCB silkscreen warning: USB + P1 power conflict -->
+
+<!-- Warning triangle (larger, thicker) -->
+<polygon points="45,4 2,74 88,74" fill="none" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+<!-- Lightning bolt (larger, sharper, centered) -->
+<path d="M49,18 L33,46 L43,46 L35,66 L57,40 L46,40 Z" fill="#000" stroke="#000" stroke-width="0.5" stroke-linejoin="round"/>
+
+<!-- Warning text -->
+<text x="95" y="20" font-family="monospace" font-size="9" fill="#000" font-weight="700">WARNING</text>
+
+<text x="95" y="36" font-family="monospace" font-size="8" fill="#000">Do NOT power via USB (5V)</text>
+<text x="95" y="48" font-family="monospace" font-size="8" fill="#000">and P1 port at the same time.</text>
+
+<text x="95" y="66" font-family="monospace" font-size="8" fill="#000">When using USB supply:</text>
+<text x="95" y="78" font-family="monospace" font-size="9" fill="#000" font-weight="700">Remove jumper 5V_JP</text>
+
+</svg>
