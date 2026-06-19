@@ -26,6 +26,7 @@ void dht_init(uint8_t pin) {
   if (dht_sensor != nullptr) {
     delete dht_sensor;
   }
+  pinMode(pin, INPUT_PULLUP);  // internal pull-up, replace with 4.7kΩ external resistor
   dht_sensor = new DHT(pin, DHT22);
   dht_sensor->begin();
   Serial.println("DHT22 sensor initialized.");
@@ -37,8 +38,10 @@ bool dht_read() {
     return false;
   }
 
+  noInterrupts();
   float h = dht_sensor->readHumidity();
   float t = dht_sensor->readTemperature();
+  interrupts();
 
   if (!isnan(h) && !isnan(t)) {
     last_temperature = t;

@@ -8,7 +8,7 @@
 #define INVERTER_POWER_GPIO_PIN GPIO10
 #define ELECTRICAL_METER_DATAREQUEST_GPIO_PIN GPIO7
 #define UNUSED_GPIO_PIN GPIO5  // used to generate random seed
-#define DHT_GPIO_PIN GPIO4     // DHT22 data pin
+#define DHT_GPIO_PIN GPIO9     // DHT22 data pin
 
 #define USER_BUTTON_GPIO_PIN USER_KEY  // The interrupt pin is attached to USER_SW
 
@@ -151,8 +151,15 @@ void setup() {
 
   Serial.println("Serial 2 is setup.");
 
+  /* Enable VEXT to power the DHT22 sensor (mains-powered device, always on) */
+  pinMode(Vext, OUTPUT);
+  digitalWrite(Vext, LOW);  // LOW = VEXT ON on CubeCell
+
   /* Initialize DHT22 sensor */
   dht_init(DHT_GPIO_PIN);
+  delay(2000);  // DHT22 requires 2s warm-up before first valid read
+  dht_read();
+  Serial.printf("DHT22 initial read: %.1f°C, %.1f%%\n", dht_get_temperature(), dht_get_humidity());
 
   /* Initialize the elec reader */
   elec_init();
