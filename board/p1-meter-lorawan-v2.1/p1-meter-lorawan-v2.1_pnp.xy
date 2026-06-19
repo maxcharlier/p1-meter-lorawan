@@ -1,0 +1,24 @@
+# Pick And Place List
+# eMail=
+#
+# Project=p1-meter-lorawan-v2.1
+# Date=23:11:25
+# CreatedBy=Fritzing 1.0.7.2026-04-14.CD-2576-0-394a8bb4
+#
+# Coordinates in mils, always center of component
+# Origin 0/0=Lower left corner of PCB. Rotation in degree (0-360, math. pos.)
+RefDes,Description,Package,X,Y,Rotation,Side,Mount
+Description: resistance;capacitance;inductance;voltage;current;power;mpn;mn;
+U1,";;;;;;;;","",1180.44,648.437,180,Top,MANUAL
+R3,"220;;;;;0.25W;;;","THT",198.703,566.548,-90,Top,THT
+TX,";;;;0.030A;;;;","5 mm [THT]",198.703,1339.34,180,Top,THT
+R1,"10k;;;;;0.25W;;;","THT",398.703,1366.55,-90,Top,THT
+R2,"10k;;;;;0.25W;;;","THT",598.703,1366.55,-90,Top,THT
+DHT Sensor,";;;;;;;;","THT",1398.7,616.548,180,Top,THT
+BS170,";;;;;;;;","TO92 [THT]",806.203,1370.05,180,Top,THT
+RPullUpDHT,"10k;;;;;0.25W;;;","THT",2098.7,566.548,90,Top,THT
+5V_JP,";;;;;;;;","THT",1798.7,1316.55,180,Top,THT
++5V,";;;;;;;;","THT",2098.7,1266.55,90,Top,THT
+RST,";;;;;;;;","THT",2098.7,1366.55,90,Top,THT
+GND,";;;;;;;;","THT",2098.7,1466.55,90,Top,THT
+Data,";;;;;;;;","THT",2098.7,1566.55,90,Top,THT
