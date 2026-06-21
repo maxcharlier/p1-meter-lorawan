@@ -306,6 +306,46 @@ Each Min/Max/Mean stat block is 3 × 3 bytes (24-bit little-endian unsigned inte
 
 ---
 
+## Payload decoder
+
+A standalone Python decoder for the LoRaWAN frames is provided in [`decoder/decoder.py`](decoder/decoder.py). It has no dependencies beyond the Python standard library.
+
+### Usage
+
+```bash
+# Decode a base64 payload string (as received from a LoRaWAN network server)
+python3 decoder/decoder.py <base64_payload>
+
+# Run the built-in examples
+python3 decoder/decoder.py
+```
+
+### What it decodes
+
+The decoder auto-detects the frame variant from the `NB Phases` bits in the header byte and returns a `DecodedFrame` object with all fields resolved to human-readable units (W, V, A, °C, Wh):
+
+| Variant | Bytes | Auto-detected when |
+|---------|-------|--------------------|
+| Mono-phase | 62 | `NB Phases = 1` |
+| Mono-phase + overvoltage | 68 | `NB Phases = 1` + 6 extra bytes present |
+| Three-phase | 98 | `NB Phases = 3` |
+
+### Using it as a module
+
+```python
+from decoder.decoder import decode_base64
+
+frame = decode_base64("Eoih9Gh...")
+
+print(frame.datetime_utc)           # meter timestamp (UTC)
+print(frame.index_cons_total_wh)    # total consumption = day + night Wh
+print(frame.cons_w.mean)            # mean import power over the 15-min window (W)
+print(frame.l1_voltage_v)           # Stats(min=..., max=..., mean=...)  in V
+print(frame.overvoltage)            # OvervoltageData or None
+```
+
+---
+
 ## Sources
 
 Local copies of the key reference documents are in the [`sources/`](sources/) folder.
