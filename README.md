@@ -2,6 +2,9 @@
 
 Read your Belgian smart meter (ORES / Fluvius) via the **P1 port** and forward aggregated electrical data over **LoRaWAN** every 15 minutes using a Heltec CubeCell board.
 
+![DSCF0134.JPG](board/pictures/DSCF0134.JPG)
+![DSCF0135.JPG](board/pictures/DSCF0135.JPG)
+![DSCF0125.jpg](board/pictures/DSCF0125.jpg)
 ## Quick start
 
 ```bash
@@ -60,18 +63,20 @@ Board documentation and pinout are available in [`sources/`](sources/).
 
 ### Components
 
-| Component | Reference | Notes |
-|-----------|-----------|-------|
+| Component | Reference                  | Notes |
+|-----------|----------------------------|-------|
 | Arduino board | Heltec CubeCell HTCC-AB02A | Two hardware UARTs + integrated LoRa 868 MHz |
-| Signal inverter / level shifter | BS170 N-channel MOSFET | Inverts 5 V → 3.3 V (common-drain) |
-| Meter connector | RJ11 6P6C | P1 port on Belgian smart meters (pins 1, 2, 3, 5, 6 used) |
-| Environmental sensor | DHT22 | Temperature + humidity (all sketches except serial-config-checker) |
-| Pull-up resistors | 2 × 10 kΩ (R1, R2) | BS170 inverter biasing (R1 on source/RX2, R2 on gate/Data) |
-| DHT pull-up resistor | 1 × 10 kΩ (RPullUpDHT) | DHT22 data line pull-up to VEXT |
-| LED current limiter | 1 × 220 Ω (R3) | TX indicator LED |
-| TX indicator LED | 5 mm red LED | Driven by GPIO1 via R3 |
-| Power jumper | 2-pin header (5V_JP) | Connects P1 +5 V to VIN — **remove when using USB** |
+| Signal inverter / level shifter | BS170 N-channel MOSFET     | Inverts 5 V → 3.3 V (common-drain) |
+| Meter connector | RJ11 6P6C                  | P1 port on Belgian smart meters (pins 1, 2, 3, 5, 6 used) |
+| Environmental sensor | DHT22                      | Temperature + humidity (all sketches except serial-config-checker) |
+| Pull-up resistors | 3 × 10 kΩ (R1, R2)         | BS170 inverter biasing (R1 on source/RX2, R2 on gate/Data) |
+| DHT pull-up resistor | 1 × 10 kΩ (RPullUpDHT)     | DHT22 data line pull-up to VEXT |
+| LED current limiter | 1 × 220 Ω (R3)             | TX indicator LED |
+| TX indicator LED | 5 mm red LED               | Driven by GPIO1 via R3 |
+| Power jumper | 2-pin header (5V_JP)       | Connects P1 +5 V to VIN — **remove when using USB** |
+![DSCF0099.jpg](board/pictures/DSCF0099.jpg)
 
+For the PCB, you can print it with gerber files from `board/p1-meter-lorawan-v2.1`. The PCB was created using [Fritzing](https://fritzing.org/) and can be modified in `board/p1-meter-lorawan-v2.1.fzz`
 ### Wiring — P1 port to CubeCell
 
 > **WARNING — do not connect both power sources at the same time.**
